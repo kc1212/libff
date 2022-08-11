@@ -54,6 +54,7 @@ public:
     static my_Fp Frobenius_coeffs_c1[2]; // non_residue^((modulus^i-1)/2) for i=0,1
 
     static Fp2_model<n, modulus> root_of_unity;
+    static Fp2_model<n, modulus> multiplicative_generator; // generator of Fp^*
 
     my_Fp c0, c1;
     Fp2_model() {};
@@ -170,6 +171,9 @@ Fp_model<n, modulus> Fp2_model<n, modulus>::Frobenius_coeffs_c1[2];
 
 template<mp_size_t n, const bigint<n>& modulus>
 Fp2_model<n, modulus> Fp2_model<n, modulus>::root_of_unity;
+
+template<mp_size_t n, const bigint<n>& modulus>
+Fp2_model<n, modulus> Fp2_model<n, modulus>::multiplicative_generator;
 
 } // namespace libff
 #include <libff/algebra/fields/prime_extension/fp2.tcc>

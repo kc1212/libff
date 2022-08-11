@@ -18,6 +18,7 @@
 #include "libff/algebra/fields/binary/gf192.hpp"
 #include "libff/algebra/fields/binary/gf256.hpp"
 #include "libff/algebra/fields/prime_base/fp.hpp"
+#include "libff/algebra/fields/prime_extension/fp2.hpp"
 
 namespace libff {
 
@@ -53,6 +54,11 @@ struct is_multiplicative {
 
 template<mp_size_t n, const bigint<n>& modulus>
 struct is_multiplicative<Fp_model<n, modulus>> {
+    static const bool value = true;
+};
+
+template<mp_size_t n, const bigint<n>& modulus>
+struct is_multiplicative<Fp2_model<n, modulus>> {
     static const bool value = true;
 };
 
