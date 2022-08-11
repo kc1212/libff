@@ -53,9 +53,12 @@ public:
     static Fp2_model<n, modulus> nqr_to_t; // nqr^t
     static my_Fp Frobenius_coeffs_c1[2]; // non_residue^((modulus^i-1)/2) for i=0,1
 
+    static Fp2_model<n, modulus> root_of_unity;
+
     my_Fp c0, c1;
     Fp2_model() {};
     Fp2_model(const my_Fp& c0, const my_Fp& c1) : c0(c0), c1(c1) {};
+    Fp2_model(const my_Fp& c0) : c0(c0), c1(my_Fp::zero()) {};
 
     void clear() { c0.clear(); c1.clear(); }
     void print() const { printf("c0/c1:\n"); c0.print(); c1.print(); }
@@ -164,6 +167,9 @@ Fp2_model<n, modulus> Fp2_model<n, modulus>::nqr_to_t;
 
 template<mp_size_t n, const bigint<n>& modulus>
 Fp_model<n, modulus> Fp2_model<n, modulus>::Frobenius_coeffs_c1[2];
+
+template<mp_size_t n, const bigint<n>& modulus>
+Fp2_model<n, modulus> Fp2_model<n, modulus>::root_of_unity;
 
 } // namespace libff
 #include <libff/algebra/fields/prime_extension/fp2.tcc>
