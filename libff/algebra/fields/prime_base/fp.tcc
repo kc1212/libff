@@ -564,6 +564,15 @@ Fp_model<n,modulus>& Fp_model<n,modulus>::operator^=(const bigint<m> &pow)
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
+Fp_model<n,modulus>& Fp_model<n,modulus>::operator^=(const mpz_t pow)
+{
+    size_t pow_limbs = mpz_size(pow);
+    assert(num_limbs >= pow_limbs);
+    (*this) = power<Fp_model<n, modulus> >(*this, bigint<n>(pow));
+    return (*this);
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
 Fp_model<n,modulus> Fp_model<n,modulus>::operator+(const Fp_model<n,modulus>& other) const
 {
     Fp_model<n, modulus> r(*this);
@@ -594,6 +603,14 @@ Fp_model<n,modulus> Fp_model<n,modulus>::operator^(const unsigned long pow) cons
 template<mp_size_t n, const bigint<n>& modulus>
 template<mp_size_t m>
 Fp_model<n,modulus> Fp_model<n,modulus>::operator^(const bigint<m> &pow) const
+{
+    Fp_model<n, modulus> r(*this);
+    return (r ^= pow);
+}
+
+
+template<mp_size_t n, const bigint<n>& modulus>
+Fp_model<n,modulus> Fp_model<n,modulus>::operator^(const mpz_t pow) const
 {
     Fp_model<n, modulus> r(*this);
     return (r ^= pow);

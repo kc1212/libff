@@ -109,6 +109,7 @@ public:
     Fp_model& operator^=(const unsigned long pow);
     template<mp_size_t m>
     Fp_model& operator^=(const bigint<m> &pow);
+    Fp_model& operator^=(const mpz_t pow);
 
     Fp_model operator+(const Fp_model& other) const;
     Fp_model operator-(const Fp_model& other) const;
@@ -116,6 +117,7 @@ public:
     Fp_model operator^(const unsigned long pow) const;
     template<mp_size_t m>
     Fp_model operator^(const bigint<m> &pow) const;
+    Fp_model operator^(const mpz_t pow) const;
     Fp_model operator-() const;
 
     Fp_model& square();

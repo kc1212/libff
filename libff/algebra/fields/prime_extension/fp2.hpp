@@ -87,6 +87,7 @@ public:
     Fp2_model& operator^=(const unsigned long pow);
     template<mp_size_t m>
     Fp2_model& operator^=(const bigint<m> &pow);
+    Fp2_model& operator^=(const mpz_t pow);
 
     Fp2_model operator+(const Fp2_model &other) const;
     Fp2_model operator-(const Fp2_model &other) const;
@@ -95,6 +96,7 @@ public:
     template<mp_size_t m>
     Fp2_model operator^(const bigint<m> &other) const;
     Fp2_model operator-() const;
+    Fp2_model operator^(const mpz_t pow) const;
 
     Fp2_model& square(); // default is squared_complex
     Fp2_model squared() const; // default is squared_complex
@@ -115,6 +117,8 @@ public:
     static Fp2_model<n, modulus> one();
     static Fp2_model<n, modulus> random_element();
     static void forder(mpz_t r);
+    bigint<n> as_bigint() const;
+    unsigned long as_ulong() const;
 
     friend std::ostream& operator<< <n, modulus>(std::ostream &out, const Fp2_model<n, modulus> &el);
     friend std::istream& operator>> <n, modulus>(std::istream &in, Fp2_model<n, modulus> &el);

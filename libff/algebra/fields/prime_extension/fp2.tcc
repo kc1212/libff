@@ -133,6 +133,14 @@ Fp2_model<n,modulus> Fp2_model<n,modulus>::operator^(const bigint<m> &pow) const
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
+Fp2_model<n,modulus> Fp2_model<n,modulus>::operator^(const mpz_t pow) const
+{
+    size_t pow_limbs = mpz_size(pow);
+    assert(n >= pow_limbs);
+    return power<Fp2_model<n, modulus>>(*this, bigint<n>(pow));
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
 Fp2_model<n,modulus>& Fp2_model<n,modulus>::operator+=(const Fp2_model<n,modulus>& other)
 {
     (*this) = *this + other;
@@ -163,6 +171,13 @@ Fp2_model<n,modulus>& Fp2_model<n,modulus>::operator^=(const unsigned long pow)
 template<mp_size_t n, const bigint<n>& modulus>
 template<mp_size_t m>
 Fp2_model<n,modulus>& Fp2_model<n,modulus>::operator^=(const bigint<m> &pow)
+{
+    (*this) = *this ^ pow;
+    return (*this);
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+Fp2_model<n,modulus>& Fp2_model<n,modulus>::operator^=(const mpz_t pow)
 {
     (*this) = *this ^ pow;
     return (*this);
@@ -269,6 +284,18 @@ bool Fp2_model<n,modulus>::from_words(std::vector<uint64_t> words)
     std::vector<uint64_t> words1(vec_center, vec_end);
     // Fp_model's from_words() takes care of asserts about vector length.
     return c0.from_words(words0) && c1.from_words(words1);
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+bigint<n> Fp2_model<n,modulus>::as_bigint() const
+{
+    return c0.as_bigint();
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+unsigned long Fp2_model<n,modulus>::as_ulong() const
+{
+    return this->as_bigint().as_ulong();
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
