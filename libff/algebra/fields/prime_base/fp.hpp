@@ -137,6 +137,7 @@ public:
     static Fp_model<n, modulus> random_element();
     static Fp_model<n, modulus> geometric_generator(); // generator^k, for k = 1 to m, domain size m
     static Fp_model<n, modulus> arithmetic_generator();// generator++, for k = 1 to m, domain size m
+    static void forder(mpz_t r);
 
     friend std::ostream& operator<< <n,modulus>(std::ostream &out, const Fp_model<n, modulus> &p);
     friend std::istream& operator>> <n,modulus>(std::istream &in, Fp_model<n, modulus> &p);

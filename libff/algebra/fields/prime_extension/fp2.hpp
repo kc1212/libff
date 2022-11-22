@@ -114,6 +114,7 @@ public:
     static Fp2_model<n, modulus> zero();
     static Fp2_model<n, modulus> one();
     static Fp2_model<n, modulus> random_element();
+    static void forder(mpz_t r);
 
     friend std::ostream& operator<< <n, modulus>(std::ostream &out, const Fp2_model<n, modulus> &el);
     friend std::istream& operator>> <n, modulus>(std::istream &in, Fp2_model<n, modulus> &el);

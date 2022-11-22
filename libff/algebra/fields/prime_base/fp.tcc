@@ -321,6 +321,12 @@ Fp_model<n,modulus> Fp_model<n,modulus>::arithmetic_generator()
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
+void Fp_model<n,modulus>::forder(mpz_t r)
+{
+    Fp_model<n,modulus>::mod.to_mpz(r);
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
 Fp_model<n,modulus>& Fp_model<n,modulus>::operator+=(const Fp_model<n,modulus>& other)
 {
 #ifdef PROFILE_OP_COUNTS

@@ -45,6 +45,15 @@ void Fp2_model<n,modulus>::randomize()
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
+void Fp2_model<n,modulus>::forder(mpz_t r)
+{
+    mpz_t tmp;
+    mpz_init(tmp);
+    Fp2_model<n,modulus>::my_Fp::forder(tmp);
+    mpz_mul(r, tmp, tmp);
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
 bool Fp2_model<n,modulus>::operator==(const Fp2_model<n,modulus> &other) const
 {
     return (this->c0 == other.c0 && this->c1 == other.c1);
