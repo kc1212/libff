@@ -126,6 +126,10 @@ public:
     Fp_model inverse() const;
     Fp_model Frobenius_map(unsigned long power) const;
     Fp_model sqrt() const; // HAS TO BE A SQUARE (else does not terminate)
+    size_t get_num_limbs() const;
+    size_t mont_repr_size() const;
+    const mp_limb_t* mont_repr_ptr() const;
+    void clear_bits_higher_than_mod();
 
     static std::size_t ceil_size_in_bits() { return num_bits; }
     static std::size_t floor_size_in_bits() { return num_bits - 1; }

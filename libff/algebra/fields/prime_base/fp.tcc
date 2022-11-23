@@ -796,6 +796,40 @@ Fp_model<n,modulus> Fp_model<n,modulus>::sqrt() const
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
+size_t Fp_model<n,modulus>::get_num_limbs() const
+{
+    assert(sizeof(this->mont_repr) / sizeof(mp_limb_t) == num_limbs);
+    return num_limbs;
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+size_t Fp_model<n,modulus>::mont_repr_size() const
+{
+    return sizeof(this->mont_repr);
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+const mp_limb_t* Fp_model<n,modulus>::mont_repr_ptr() const
+{
+    return this->mont_repr.data;
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+void Fp_model<n,modulus>::clear_bits_higher_than_mod()
+{
+    const size_t bits_per_limb = 8 * sizeof(mp_limb_t);
+    size_t bitno = sizeof(this->mont_repr) * 8 - 1;
+    while (this->mod.test_bit(bitno) == false)
+    {
+        const std::size_t part = bitno / bits_per_limb;
+        const std::size_t bit = bitno - (bits_per_limb*part);
+
+        this->mont_repr.data[part] &= ~(1ul<<bit);
+        bitno--;
+    }
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
 std::vector<uint64_t> Fp_model<n,modulus>::to_words() const
 {
     // TODO: implement for other bit architectures

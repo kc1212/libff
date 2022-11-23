@@ -35,6 +35,7 @@ std::istream& operator>>(std::istream &, Fp2_model<n, modulus> &);
 template<mp_size_t n, const bigint<n>& modulus>
 class Fp2_model {
 public:
+    static const constexpr bigint<n>& mod = modulus;
     typedef Fp_model<n, modulus> my_Fp;
 #ifdef PROFILE_OP_COUNTS // NOTE: op counts are affected when you exponentiate with ^
     static long long add_cnt;
@@ -106,6 +107,12 @@ public:
     Fp2_model sqrt() const; // HAS TO BE A SQUARE (else does not terminate)
     Fp2_model squared_karatsuba() const;
     Fp2_model squared_complex() const;
+
+    /// NOTE: the following functions only deal with the component c0!
+    size_t get_num_limbs() const;
+    size_t mont_repr_size() const;
+    const mp_limb_t* mont_repr_ptr() const;
+    void clear_bits_higher_than_mod();
 
     static std::size_t ceil_size_in_bits() { return 2 * my_Fp::ceil_size_in_bits(); }
     static std::size_t floor_size_in_bits() { return 2 * my_Fp::floor_size_in_bits(); }

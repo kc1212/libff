@@ -266,6 +266,30 @@ Fp2_model<n,modulus> Fp2_model<n,modulus>::sqrt() const
 }
 
 template<mp_size_t n, const bigint<n>& modulus>
+size_t Fp2_model<n,modulus>::get_num_limbs() const
+{
+    return this->c0.get_num_limbs();
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+size_t Fp2_model<n,modulus>::mont_repr_size() const
+{
+    return this->c0.mont_repr_size();
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+const mp_limb_t* Fp2_model<n,modulus>::mont_repr_ptr() const
+{
+    return this->c0.mont_repr_ptr();
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
+void Fp2_model<n,modulus>::clear_bits_higher_than_mod()
+{
+    return this->c0.clear_bits_higher_than_mod();
+}
+
+template<mp_size_t n, const bigint<n>& modulus>
 std::vector<uint64_t> Fp2_model<n,modulus>::to_words() const
 {
     std::vector<uint64_t> words = c0.to_words();
