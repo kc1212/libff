@@ -136,8 +136,13 @@ template<mp_size_t n, const bigint<n>& modulus>
 Fp2_model<n,modulus> Fp2_model<n,modulus>::operator^(const mpz_t pow) const
 {
     size_t pow_limbs = mpz_size(pow);
-    assert(n >= pow_limbs);
-    return power<Fp2_model<n, modulus>>(*this, bigint<n>(pow));
+    if (n >= pow_limbs) {
+        return power<Fp2_model<n, modulus>>(*this, bigint<n>(pow));
+    } else if (2*n >= pow_limbs) {
+        return power<Fp2_model<n, modulus>>(*this, bigint<2*n>(pow));
+    } else {
+        throw std::runtime_error("exponent is too big");
+    }
 }
 
 template<mp_size_t n, const bigint<n>& modulus>

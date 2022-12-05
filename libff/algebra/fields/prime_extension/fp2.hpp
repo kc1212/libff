@@ -61,6 +61,7 @@ public:
     Fp2_model() {};
     Fp2_model(const my_Fp& c0, const my_Fp& c1) : c0(c0), c1(c1) {};
     Fp2_model(const my_Fp& c0) : c0(c0), c1(my_Fp::zero()) {};
+    Fp2_model(unsigned long c0, unsigned long c1) : c0(c0), c1(c1) {};
 
     void clear() { c0.clear(); c1.clear(); }
     void print() const { printf("c0/c1:\n"); c0.print(); c1.print(); }
