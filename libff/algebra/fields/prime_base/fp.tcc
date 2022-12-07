@@ -13,6 +13,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <limits>
+#include <stdexcept>
 #include <vector>
 
 #include <libff/algebra/field_utils/field_utils.hpp>
@@ -697,7 +698,9 @@ Fp_model<n,modulus>& Fp_model<n,modulus>::invert()
     this->inv_cnt++;
 #endif
 
-    assert(!this->is_zero());
+    if (this->is_zero()) {
+        throw std::runtime_error("cannot invert 0");
+    }
 
     bigint<n> g; /* gp should have room for vn = n limbs */
 
