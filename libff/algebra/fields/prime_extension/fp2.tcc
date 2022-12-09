@@ -101,15 +101,22 @@ Fp2_model<n,modulus> Fp2_model<n,modulus>::operator*(const Fp2_model<n,modulus> 
 #ifdef PROFILE_OP_COUNTS
     this->mul_cnt++;
 #endif
-    /* Devegili OhEig Scott Dahab --- Multiplication and Squaring on Pairing-Friendly Fields.pdf; Section 3 (Karatsuba) */
-    const my_Fp
-        &A = other.c0, &B = other.c1,
-        &a = this->c0, &b = this->c1;
-    const my_Fp aA = a * A;
-    const my_Fp bB = b * B;
+    if (this->simplify_mul) {
+        const my_Fp ab0 = this->c0 * other.c0;
+        const my_Fp ab1 = this->c1 * other.c1;
+        const my_Fp c = (this->c0 + this->c1) * (other.c0 + other.c1);
+        return Fp2_model<n,modulus>(ab0 - ab1, c - ab0 - ab1);
+    } else {
+        /* Devegili OhEig Scott Dahab --- Multiplication and Squaring on Pairing-Friendly Fields.pdf; Section 3 (Karatsuba) */
+        const my_Fp
+            &A = other.c0, &B = other.c1,
+            &a = this->c0, &b = this->c1;
+        const my_Fp aA = a * A;
+        const my_Fp bB = b * B;
 
-    return Fp2_model<n,modulus>(aA + non_residue * bB,
-                                (a + b)*(A+B) - aA - bB);
+        return Fp2_model<n,modulus>(aA + non_residue * bB,
+                                    (a + b)*(A+B) - aA - bB);
+    }
 }
 
 template<mp_size_t n, const bigint<n>& modulus>

@@ -56,6 +56,7 @@ public:
 
     static Fp2_model<n, modulus> root_of_unity;
     static Fp2_model<n, modulus> multiplicative_generator; // generator of Fp^*
+    static bool simplify_mul;
 
     my_Fp c0, c1;
     Fp2_model() {};
@@ -187,6 +188,9 @@ Fp2_model<n, modulus> Fp2_model<n, modulus>::root_of_unity;
 
 template<mp_size_t n, const bigint<n>& modulus>
 Fp2_model<n, modulus> Fp2_model<n, modulus>::multiplicative_generator;
+
+template<mp_size_t n, const bigint<n>& modulus>
+bool Fp2_model<n, modulus>::simplify_mul;
 
 } // namespace libff
 #include <libff/algebra/fields/prime_extension/fp2.tcc>
